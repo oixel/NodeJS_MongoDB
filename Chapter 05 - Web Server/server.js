@@ -144,7 +144,3 @@ const server = http.createServer((req, res) => {
 
 // Output port connection information
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-// Add listener for the log event
-// myEmitter.on('log', (msg) => logEvents(msg));
-
