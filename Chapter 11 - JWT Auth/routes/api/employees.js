@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const employeesController = require('../../controllers/employeesController');
-const verifyJWT = require('../../middleware/verifyJWT');
 
 // Chaining HTTP methods together under the same route (for just the slash)
 router.route('/')
-    .get(verifyJWT, employeesController.getAlEmployees)  // Calls verify first before going to getAllEmployees
+    .get(employeesController.getAlEmployees)  // Calls verify first before going to getAllEmployees
     .post(employeesController.createNewEmployee)
     .put(employeesController.updateEmployee)
     .delete(employeesController.deleteEmployee);

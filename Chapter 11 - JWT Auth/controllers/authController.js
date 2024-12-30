@@ -23,10 +23,8 @@ const handleLogin = async (req, res) => {
     // If no user with given username was found, give a 401 error
     if (!foundUser) return res.sendStatus(401);  // Unauthorized
 
-    // Evaluate password
-    // bycrypt was always returning false, so I just simplified for my sake
-    // const match = await bcrypt.compare(password, foundUser.password);
-    const match = password == foundUser.password;
+    // Evaluate password (Use Username: Merry Password: Christmas)
+    const match = await bcrypt.compare(password, foundUser.password);
 
     // If the password matches the one stored under the username, then return success!
     if (match) {
@@ -59,7 +57,7 @@ const handleLogin = async (req, res) => {
         );
 
         // Ensure refresh token is sent as HTTP Only to prevent it from being accessible to JavaScript
-        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });  // Set cookie's max age to 1 day
+        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });  // Set cookie's max age to 1 day
 
         // Sending access token as JSON is not vulnerable since it has such a short life span
         res.json({ accessToken });
